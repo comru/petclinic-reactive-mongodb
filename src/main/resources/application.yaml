@@ -1,0 +1,9 @@
+spring:
+  application.name: reactive-petclinic
+  data:
+    mongodb:
+      uri: mongodb://root:mongodb_secret@localhost:27017
+      database: mydb
+  webflux:
+    problemdetails:
+      enabled: true

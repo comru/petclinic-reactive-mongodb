@@ -1,0 +1,37 @@
+services:
+  mongo:
+    image: mongo:7.0.7
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongodb_secret
+      MONGO_INITDB_DATABASE: mydb
+#    healthcheck:
+#      test: echo 'db.runCommand({serverStatus:1}).ok' | mongosh admin -u $$MONGO_INITDB_ROOT_USERNAME -p $$MONGO_INITDB_ROOT_PASSWORD --quiet | grep 1
+#      interval: 10s
+#      timeout: 5s
+#      start_period: 10s
+#      retries: 5
+  mongoexpress:
+    image: mongo-express:1.0.2
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: root
+      ME_CONFIG_BASICAUTH_PASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://root:mongodb_secret@mongo:27017
+#    healthcheck:
+#      test: wget --no-verbose --tries=1 --spider http://localhost:8081/status || exit -1
+#      interval: 10s
+#      timeout: 5s
+#      start_period: 60s
+#      retries: 5
+volumes:
+  mongo_data:
+
+
