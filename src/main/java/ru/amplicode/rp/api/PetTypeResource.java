@@ -3,11 +3,10 @@ package ru.amplicode.rp.api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 import ru.amplicode.rp.api.mapper.PetTypeMapper;
-import ru.amplicode.rp.model.Owner;
 import ru.amplicode.rp.model.PetType;
 import ru.amplicode.rp.repository.PetTypeRepository;
 

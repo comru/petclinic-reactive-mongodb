@@ -202,6 +202,30 @@ public class PetResourceTest {
     }
 
     @Test
+    public void createValidationException() {
+        webTestClient.post()
+                .uri(uriBuilder -> uriBuilder.path("/rest/pets").build())
+                .header("Content-Type", "application/json")
+                .accept(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue("""
+                        {
+                        	"name": null,
+                        	"birthDate": "2020-04-01",
+                        	"typeId": null
+                        }"""))
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody().consumeWith(System.out::println)
+                .jsonPath("$.detail").isEqualTo("Invalid request content.")
+                .jsonPath("$.fieldErrors[2].field").isEqualTo("typeId")
+                .jsonPath("$.fieldErrors[2].message").isEqualTo("must not be null")
+                .jsonPath("$.fieldErrors[1].field").isEqualTo("ownerId")
+                .jsonPath("$.fieldErrors[1].message").isEqualTo("must not be null")
+                .jsonPath("$.fieldErrors[0].field").isEqualTo("name")
+                .jsonPath("$.fieldErrors[0].message").isEqualTo("must not be empty");
+    }
+
+    @Test
     public void patchName() {
         String petId = mongoDbService.createAndSaveBuddyPet();
 

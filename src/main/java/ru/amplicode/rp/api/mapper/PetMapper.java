@@ -10,8 +10,5 @@ public interface PetMapper {
 
     PetDto toDto(Pet pet);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Pet partialUpdate(PetDto petDto, @MappingTarget Pet pet);
-
     Pet update(PetDto petDto, @MappingTarget Pet pet);
 }

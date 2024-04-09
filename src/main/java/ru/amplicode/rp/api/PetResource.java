@@ -50,11 +50,10 @@ public class PetResource {
 
     @PostMapping
     public Mono<PetDto> create(@RequestBody @Valid Mono<PetDto> petDto) {
-        //todo check valid method
         return petDto.flatMap(dto -> {
             Pet pet = petMapper.toEntity(dto);
             return petRepository.save(pet).map(petMapper::toDto);
-        }).onErrorResume(Mono::error);
+        });
     }
 
     @PatchMapping("/{id}")
